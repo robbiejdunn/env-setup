@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# get directory called from 
+NAME=$(basename `pwd`)
+
+tmux new-session -d -x "-" -y "-" -n "Development" -s "$NAME" "ranger"
+#tmux new-session -d -x "$(tput cols)" -y "$(tput lines)" 'nvim' 
+
+tmux split-window -vd -p 25
+
+tmux split-window -h -p 70 "nvim"
+
+tmux new-window -n "Git" "watch git status"
+
+tmux split-window -hd -p 30 "git lg"
+
+tmux split-window -v -p 60
+
+tmux select-window -t "Development"
+
+tmux -2 attach-session
+
